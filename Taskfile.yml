@@ -1,0 +1,24 @@
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - cmd: task -l
+        silent: true
+
+  setup:
+    desc: "Setup the project"
+    cmds:
+      - go install github.com/mgechev/revive@latest
+      - task: build
+
+  build:
+    desc: "Lints and build the project"
+    cmds:
+      - revive -config ./revive.toml ./...
+      - go build ./...
+
+  test:unit:
+    desc: "Runs the unit tests"
+    cmds:
+      - go test -v ./...
